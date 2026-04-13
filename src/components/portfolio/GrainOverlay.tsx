@@ -8,18 +8,25 @@ import { motion } from "framer-motion";
  */
 export const GrainOverlay = () => {
   return (
-    <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden opacity-[0.03] isolation-isolate">
+    <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden opacity-[0.025] isolation-isolate">
       <motion.div
         animate={{
           x: ["0%", "-5%", "-10%", "5%", "0%"],
           y: ["0%", "5%", "-5%", "10%", "0%"],
         }}
         transition={{
-          duration: 0.2,
+          duration: 0.8,
           repeat: Infinity,
           ease: "linear",
+          repeatType: "mirror"
         }}
-        className="absolute -inset-[100%] noise-bg scale-[2.0]"
+        style={{
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
+          transform: "translateZ(0)",
+        }}
+        className="absolute -inset-[150%] noise-bg scale-[1.5]"
       />
     </div>
   );

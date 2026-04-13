@@ -70,7 +70,11 @@ export const Experience = () => {
                 <div className="absolute left-[31.5px] top-4 bottom-4 w-[2px] bg-border/20" />
                 <motion.div 
                   className="absolute left-[31.5px] top-4 bottom-4 w-[2px] bg-elegant-gold origin-top z-10"
-                  style={{ scaleY }}
+                  style={{ 
+                    scaleY,
+                    willChange: "transform",
+                    transform: "translateZ(0)"
+                  }}
                 />
               </>
             )}
