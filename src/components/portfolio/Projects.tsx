@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { fadeUp, hoverLift, viewportStandard } from "@/lib/motion";
 import { portfolioData } from "@/data/portfolio";
+import { useGitHubStars } from "@/hooks/useGitHubStars";
 
 const projects = portfolioData.projects;
 
@@ -16,63 +17,81 @@ const ProjectCard = ({
   project: typeof projects[0];
   index: number;
   prefersReducedMotion: boolean;
-}) => (
-  <motion.div
-    initial="hidden"
-    whileInView="show"
-    variants={fadeUp(index * 0.06, 30)}
-    viewport={viewportStandard}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    whileHover={prefersReducedMotion ? undefined : hoverLift}
-  >
-    <Card className="bg-dark-surface border-border hover:border-elegant-gold/50 transition-all duration-500 p-8 group flex flex-col h-full relative overflow-hidden">
-      {/* Hover glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-elegant-gold/0 to-elegant-gold/0 group-hover:from-elegant-gold/5 group-hover:to-transparent transition-all duration-500" />
-      
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="font-playfair text-2xl font-semibold text-foreground group-hover:text-elegant-gold transition-colors duration-300">
-            {project.title}
-          </h3>
-          {project.stars && (
-            <span className="text-xs text-muted-foreground bg-dark-elevated px-2 py-1 rounded-full whitespace-nowrap ml-2">
-              {project.stars} star{project.stars > 1 ? "s" : ""}
-            </span>
-          )}
-        </div>
+}) => {
+  const { stars, isLive } = useGitHubStars(project.github, project.stars);
 
-        <p className="text-sm text-elegant-gold font-medium mb-4 italic">
-          {project.subtitle}
-        </p>
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      variants={fadeUp(index * 0.06, 30)}
+      viewport={viewportStandard}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={prefersReducedMotion ? undefined : hoverLift}
+    >
+      <Card className="bg-dark-surface border-border hover:border-elegant-gold/50 transition-all duration-500 p-8 group flex flex-col h-full relative overflow-hidden">
+        {/* Hover glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-elegant-gold/0 to-elegant-gold/0 group-hover:from-elegant-gold/5 group-hover:to-transparent transition-all duration-500" />
         
-        <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-          {project.description}
-        </p>
-        
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tech.map((tech, i) => (
-            <span 
-              key={i}
-              className="px-3 py-1 text-xs bg-slate-accent/50 text-foreground rounded-full border border-border/50"
-            >
-              {tech}
-            </span>
-          ))}
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex items-start justify-between mb-2">
+            <h3 className="font-playfair text-2xl font-semibold text-foreground group-hover:text-elegant-gold transition-colors duration-300">
+              {project.title}
+            </h3>
+            <div className="flex items-center gap-2">
+              <AnimatePresence mode="wait">
+                <motion.span 
+                  key={stars}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="text-xs text-muted-foreground bg-dark-elevated px-2 py-1 rounded-full whitespace-nowrap flex items-center gap-1.5"
+                >
+                  {isLive && (
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-elegant-gold opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-elegant-gold"></span>
+                    </span>
+                  )}
+                  ⭐ {stars} star{stars !== 1 ? "s" : ""}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <p className="text-sm text-elegant-gold font-medium mb-4 italic">
+            {project.subtitle}
+          </p>
+          
+          <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
+            {project.description}
+          </p>
+          
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tech.map((tech, i) => (
+              <span 
+                key={i}
+                className="px-3 py-1 text-xs bg-slate-accent/50 text-foreground rounded-full border border-border/50"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+          
+          <Button
+            variant="ghost"
+            className="text-elegant-gold hover:text-elegant-gold hover:bg-slate-accent w-fit"
+            onClick={() => window.open(project.github, '_blank')}
+          >
+            <Github className="mr-2 h-4 w-4" />
+            View on GitHub
+            <ExternalLink className="ml-2 h-4 w-4" />
+          </Button>
         </div>
-        
-        <Button
-          variant="ghost"
-          className="text-elegant-gold hover:text-elegant-gold hover:bg-slate-accent w-fit"
-          onClick={() => window.open(project.github, '_blank')}
-        >
-          <Github className="mr-2 h-4 w-4" />
-          View on GitHub
-          <ExternalLink className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-    </Card>
-  </motion.div>
-);
+      </Card>
+    </motion.div>
+  );
+};
 
 export const Projects = () => {
   const [expanded, setExpanded] = useState(false);

@@ -53,9 +53,7 @@ const Index = () => {
     <div className="min-h-screen bg-background font-inter transition-colors duration-500">
       <ScrollProgress />
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50 transition-all duration-300">
-        <div className="container max-w-6xl mx-auto px-4 h-16 flex items-center justify-between font-playfair font-semibold">
-          <div className="text-xl tracking-tighter text-elegant-gold">P.K.S</div>
-          
+        <div className="container max-w-6xl mx-auto px-4 h-16 flex items-center justify-center relative font-playfair font-semibold">
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <a
@@ -80,11 +78,13 @@ const Index = () => {
             </div>
           </div>
 
-          <MobileNav
-            navItems={navItems}
-            activeSection={activeSection}
-            onNavigate={scrollToSection}
-          />
+          <div className="absolute right-4">
+            <MobileNav
+              navItems={navItems}
+              activeSection={activeSection}
+              onNavigate={scrollToSection}
+            />
+          </div>
         </div>
       </nav>
 
