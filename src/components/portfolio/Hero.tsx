@@ -108,28 +108,28 @@ export const Hero = () => {
 
         <motion.h1
           variants={fadeUp(0.05, 30)}
-          className="font-playfair text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 tracking-tight"
+          className="font-playfair text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 tracking-tight leading-tight"
         >
           {personal.name}
         </motion.h1>
         
         <motion.p
           variants={fadeUp(0.08)}
-          className="text-xl md:text-2xl text-muted-foreground mb-4 font-light"
+          className="text-lg md:text-2xl text-muted-foreground mb-4 font-light px-4"
         >
           {personal.role}
         </motion.p>
         
         <motion.p
           variants={fadeIn(0.1)}
-          className="text-lg md:text-xl text-elegant-gold mb-12 italic font-playfair"
+          className="text-base md:text-xl text-elegant-gold mb-12 italic font-playfair px-4"
         >
           {personal.tagline}
         </motion.p>
         
         <motion.div
           variants={staggerContainer(0.08, 0.12)}
-          className="flex flex-wrap gap-4 justify-center items-center"
+          className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center px-4"
         >
           <Magnetic>
             <motion.div variants={fadeUp()} whileHover={prefersReducedMotion ? undefined : { y: -2 }}>

@@ -17,7 +17,7 @@ export const About = () => {
   const rotate = useTransform(scrollYProgress, [0, 1], [-2, 2]);
 
   return (
-    <section ref={containerRef} className="py-32 px-4 relative overflow-hidden" id="about">
+    <section ref={containerRef} className="py-20 md:py-32 px-6 relative overflow-hidden" id="about">
       <div className="absolute inset-0 bg-dark-surface/30" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-elegant-gold/5 rounded-full blur-[128px]" />
       
@@ -27,15 +27,15 @@ export const About = () => {
           whileInView="show"
           variants={fadeUp()}
           viewport={viewportStandard}
-          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-20 text-center"
+          className="font-playfair text-3xl md:text-5xl font-bold text-elegant-gold mb-12 md:mb-20 text-center"
         >
           My Story
         </motion.h2>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Portrait Column */}
           <motion.div 
-            className="lg:col-span-5 relative"
+            className="lg:col-span-5 relative max-w-sm mx-auto lg:max-w-none"
             style={{ y: prefersReducedMotion ? 0 : y }}
           >
             <motion.div
@@ -57,14 +57,14 @@ export const About = () => {
               <div className="absolute inset-0 border-2 border-elegant-gold/10 rounded-2xl z-20 group-hover:border-elegant-gold/30 transition-all duration-300" />
             </motion.div>
             
-            {/* Decorative element */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 border-r-2 border-b-2 border-elegant-gold/20 rounded-br-2xl -z-10" />
+            {/* Decorative element (Desktop Only) */}
+            <div className="hidden lg:block absolute -bottom-6 -right-6 w-32 h-32 border-r-2 border-b-2 border-elegant-gold/20 rounded-br-2xl -z-10" />
           </motion.div>
 
           {/* Biography Column */}
           <div className="lg:col-span-7">
             <motion.div
-              className="space-y-8 text-lg md:text-xl leading-relaxed font-light text-left"
+              className="space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed font-light text-left"
               initial="hidden"
               whileInView="show"
               variants={staggerContainer(0.12)}

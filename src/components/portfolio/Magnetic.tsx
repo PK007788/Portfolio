@@ -6,6 +6,9 @@ export const Magnetic = ({ children }: { children: React.ReactNode }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    // Disable magnetic effect on touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const { clientX, clientY } = e;
     const { middleX, middleY } = ref.current 
       ? {

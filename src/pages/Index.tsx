@@ -8,6 +8,7 @@ import { Contact } from "@/components/portfolio/Contact";
 import { ThemeToggle } from "@/components/portfolio/ThemeToggle";
 import { ScrollProgress } from "@/components/portfolio/ScrollProgress";
 import { CustomCursor } from "@/components/portfolio/CustomCursor";
+import { MobileNav } from "@/components/portfolio/MobileNav";
 import { cn } from "@/lib/utils";
 
 const navItems = ["About", "Projects", "Experience", "Skills", "Contact"];
@@ -51,8 +52,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background font-inter transition-colors duration-500">
       <ScrollProgress />
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
-        <div className="container max-w-6xl mx-auto px-4 h-16 flex items-center justify-center relative font-playfair font-semibold">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50 transition-all duration-300">
+        <div className="container max-w-6xl mx-auto px-4 h-16 flex items-center justify-between font-playfair font-semibold">
+          <div className="text-xl tracking-tighter text-elegant-gold">P.K.S</div>
+          
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <a
@@ -72,11 +75,16 @@ const Index = () => {
                 {item}
               </a>
             ))}
+            <div className="ml-4 pl-4 border-l border-border/50">
+              <ThemeToggle />
+            </div>
           </div>
 
-          <div className="absolute right-4">
-            <ThemeToggle />
-          </div>
+          <MobileNav
+            navItems={navItems}
+            activeSection={activeSection}
+            onNavigate={scrollToSection}
+          />
         </div>
       </nav>
 
