@@ -1,15 +1,41 @@
+import { useState, useRef } from "react";
 import { Briefcase, GraduationCap, Trophy } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { fadeUp, hoverLift, viewportStandard } from "@/lib/motion";
 import { portfolioData } from "@/data/portfolio";
 
 const { experience, achievements, education } = portfolioData;
 
+const TimelineNode = ({ active }: { active?: boolean }) => (
+  <div className="absolute -left-[41px] top-1">
+    <motion.div 
+      animate={{
+        scale: active ? [1, 1.2, 1] : 1,
+        backgroundColor: active ? "var(--elegant-gold)" : "var(--border)",
+      }}
+      transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+      className={`w-3 h-3 rounded-full shadow-[0_0_10px_hsl(36_50%_75%/0.4)] ${active ? 'bg-elegant-gold' : 'bg-border'}`} 
+    />
+  </div>
+);
+
 export const Experience = () => {
   const prefersReducedMotion = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
-    <section className="py-24 px-4 relative overflow-hidden" id="experience">
+    <section ref={containerRef} className="py-24 px-4 relative overflow-hidden" id="experience">
       <div className="absolute inset-0 bg-dark-surface" />
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-elegant-gold/5 rounded-full blur-3xl" />
       
@@ -25,7 +51,7 @@ export const Experience = () => {
         </motion.h2>
 
         {/* Experience */}
-        <div className="mb-16">
+        <div className="mb-16 relative">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -37,32 +63,45 @@ export const Experience = () => {
             <h3 className="font-playfair text-2xl font-semibold text-foreground">Experience</h3>
           </motion.div>
 
-          <div className="space-y-8 border-l-2 border-border pl-8 ml-2">
-            {experience.map((exp, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="show"
-                variants={fadeUp(i * 0.08)}
-                viewport={viewportStandard}
-                whileHover={prefersReducedMotion ? undefined : hoverLift}
-                className="relative"
-              >
-                <div className="absolute -left-[41px] top-1 w-3 h-3 rounded-full bg-elegant-gold shadow-[0_0_10px_hsl(36_50%_75%/0.4)]" />
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                  <h4 className="text-lg font-semibold text-foreground">{exp.role}</h4>
-                  <span className="text-sm text-muted-foreground">{exp.period}</span>
-                </div>
-                <p className="text-elegant-gold text-sm mb-3">{exp.org} · {exp.location}</p>
-                <ul className="space-y-2">
-                  {exp.points.map((point, j) => (
-                    <li key={j} className="text-muted-foreground text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-border">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+          <div className="relative ml-2">
+            {/* Timeline Track */}
+            {!prefersReducedMotion && (
+              <>
+                <div className="absolute left-[31.5px] top-4 bottom-4 w-[2px] bg-border/20" />
+                <motion.div 
+                  className="absolute left-[31.5px] top-4 bottom-4 w-[2px] bg-elegant-gold origin-top z-10"
+                  style={{ scaleY }}
+                />
+              </>
+            )}
+            
+            <div className="space-y-12 pl-12">
+              {experience.map((exp, i) => (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="show"
+                  variants={fadeUp(i * 0.08)}
+                  viewport={viewportStandard}
+                  whileHover={prefersReducedMotion ? undefined : hoverLift}
+                  className="relative"
+                >
+                  <TimelineNode active={true} />
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                    <h4 className="text-lg font-semibold text-foreground">{exp.role}</h4>
+                    <span className="text-sm text-muted-foreground">{exp.period}</span>
+                  </div>
+                  <p className="text-elegant-gold text-sm mb-3">{exp.org} · {exp.location}</p>
+                  <ul className="space-y-2">
+                    {exp.points.map((point, j) => (
+                      <li key={j} className="text-muted-foreground text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-border">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
 

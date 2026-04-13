@@ -7,12 +7,14 @@ import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import SmoothScroll from "@/components/portfolio/SmoothScroll";
+import { GrainOverlay } from "@/components/portfolio/GrainOverlay";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <GrainOverlay />
       <SmoothScroll>
         <TooltipProvider>
           <Toaster />
