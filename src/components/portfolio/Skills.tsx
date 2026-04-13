@@ -1,79 +1,23 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { fadeUp, hoverLift, viewportStandard } from "@/lib/motion";
+import { portfolioData } from "@/data/portfolio";
 
-const skillCategories = [
-  {
-    title: "Languages",
-    items: [
-      { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-      { name: "C", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
-      { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-    ],
-  },
-  {
-    title: "AI / ML",
-    items: [
-      { name: "Machine Learning", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-      { name: "Deep Learning", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
-      { name: "NLP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" },
-      { name: "Computer Vision", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" },
-    ],
-  },
-  {
-    title: "Frameworks",
-    items: [
-      { name: "TensorFlow", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
-      { name: "PyTorch", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" },
-      { name: "Scikit-learn", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" },
-      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "Flask", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" },
-      { name: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" },
-    ],
-  },
-  {
-    title: "Tools",
-    items: [
-      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-      { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
-      { name: "SQLite", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" },
-      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-      { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-    ],
-  },
-  {
-    title: "Design",
-    items: [
-      { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-      { name: "Canva", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg" },
-      { name: "Adobe Illustrator", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" },
-    ],
-  },
-  {
-    title: "Coursework",
-    items: [
-      { name: "DSA", icon: null },
-      { name: "OOP", icon: null },
-      { name: "DBMS", icon: null },
-      { name: "Computer Networks", icon: null },
-      { name: "OS", icon: null },
-      { name: "Machine Learning", icon: null },
-      { name: "Linear Algebra", icon: null },
-    ],
-  },
-];
+const skillCategories = portfolioData.skills;
 
 export const Skills = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="py-24 px-4 relative" id="skills">
       <div className="absolute top-20 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
       
       <div className="container max-w-6xl mx-auto relative z-10">
         <motion.h2
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-12"
+          initial="hidden"
+          whileInView="show"
+          variants={fadeUp()}
+          viewport={viewportStandard}
+          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-12 text-center"
         >
           Skills & Expertise
         </motion.h2>
@@ -82,10 +26,11 @@ export const Skills = () => {
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
+              initial="hidden"
+              whileInView="show"
+              variants={fadeUp(index * 0.06, 24)}
+              viewport={viewportStandard}
+              whileHover={prefersReducedMotion ? undefined : hoverLift}
               className="group p-6 rounded-lg border border-border/50 hover:border-elegant-gold/30 bg-dark-surface/50 hover:bg-dark-surface transition-all duration-500 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-elegant-gold/0 to-elegant-gold/0 group-hover:from-elegant-gold/5 group-hover:to-transparent transition-all duration-500" />

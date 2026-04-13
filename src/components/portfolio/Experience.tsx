@@ -1,42 +1,13 @@
 import { Briefcase, GraduationCap, Trophy } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { fadeUp, hoverLift, viewportStandard } from "@/lib/motion";
+import { portfolioData } from "@/data/portfolio";
 
-const experience = [
-  {
-    role: "PR and Outreach Lead",
-    org: "Google Developer Group on Campus, Gauhati University",
-    period: "Sep 2025 - Present",
-    location: "Guwahati, India",
-    points: [
-      "Led outreach initiatives increasing participation in technical events and hackathons",
-      "Organized developer meetups, workshops, and collaborations",
-    ],
-  },
-  {
-    role: "Research Intern",
-    org: "Expelee",
-    period: "May 2025 - Jul 2025",
-    location: "Remote",
-    points: [
-      "Conducted market and competitor research for emerging tech platforms",
-      "Supported product strategy through data-driven insights",
-    ],
-  },
-];
-
-const achievements = [
-  "3rd Place at GUenARK 2026 : State-level hackathon with participation from multiple institutions",
-  "3rd Place at IIIT Guwahati E-Summit Inizio 2026 : National-level hackathon and innovation competition",
-];
-
-const education = {
-  degree: "Bachelor of Technology in Information Technology",
-  institution: "Gauhati University",
-  period: "Jul 2024 - Aug 2028",
-  location: "Guwahati, Assam",
-};
+const { experience, achievements, education } = portfolioData;
 
 export const Experience = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="py-24 px-4 relative overflow-hidden" id="experience">
       <div className="absolute inset-0 bg-dark-surface" />
@@ -44,11 +15,11 @@ export const Experience = () => {
       
       <div className="container max-w-5xl mx-auto relative z-10">
         <motion.h2
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-16"
+          initial="hidden"
+          whileInView="show"
+          variants={fadeUp()}
+          viewport={viewportStandard}
+          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-16 text-center"
         >
           Experience & Education
         </motion.h2>
@@ -56,10 +27,10 @@ export const Experience = () => {
         {/* Experience */}
         <div className="mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            whileInView="show"
+            variants={fadeUp()}
+            viewport={viewportStandard}
             className="flex items-center gap-3 mb-8"
           >
             <Briefcase className="h-5 w-5 text-elegant-gold" />
@@ -70,10 +41,11 @@ export const Experience = () => {
             {experience.map((exp, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
+                initial="hidden"
+                whileInView="show"
+                variants={fadeUp(i * 0.08)}
+                viewport={viewportStandard}
+                whileHover={prefersReducedMotion ? undefined : hoverLift}
                 className="relative"
               >
                 <div className="absolute -left-[41px] top-1 w-3 h-3 rounded-full bg-elegant-gold shadow-[0_0_10px_hsl(36_50%_75%/0.4)]" />
@@ -97,10 +69,10 @@ export const Experience = () => {
         {/* Education */}
         <div className="mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            whileInView="show"
+            variants={fadeUp()}
+            viewport={viewportStandard}
             className="flex items-center gap-3 mb-8"
           >
             <GraduationCap className="h-5 w-5 text-elegant-gold" />
@@ -108,10 +80,11 @@ export const Experience = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            initial="hidden"
+            whileInView="show"
+            variants={fadeUp(0.08)}
+            viewport={viewportStandard}
+            whileHover={prefersReducedMotion ? undefined : hoverLift}
             className="border border-border rounded-lg p-6 hover:border-elegant-gold/50 transition-all duration-500 relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-elegant-gold/0 to-elegant-gold/0 group-hover:from-elegant-gold/5 group-hover:to-transparent transition-all duration-500" />
@@ -129,10 +102,10 @@ export const Experience = () => {
         {/* Achievements */}
         <div>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            whileInView="show"
+            variants={fadeUp()}
+            viewport={viewportStandard}
             className="flex items-center gap-3 mb-8"
           >
             <Trophy className="h-5 w-5 text-elegant-gold" />
@@ -143,10 +116,11 @@ export const Experience = () => {
             {achievements.map((ach, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                initial="hidden"
+                whileInView="show"
+                variants={fadeUp(i * 0.08)}
+                viewport={viewportStandard}
+                whileHover={prefersReducedMotion ? undefined : hoverLift}
                 className="flex items-start gap-4 p-4 border border-border rounded-lg hover:border-elegant-gold/50 transition-all duration-500 relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-elegant-gold/0 to-elegant-gold/0 group-hover:from-elegant-gold/5 group-hover:to-transparent transition-all duration-500" />

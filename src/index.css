@@ -8,96 +8,108 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 10%;
-    --foreground: 36 50% 88%;
+    /* Light Mode - Cream & Gold */
+    --background: 36 30% 98%;
+    --foreground: 0 0% 10%;
 
-    --card: 0 0% 12%;
-    --card-foreground: 36 50% 88%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 36 50% 88%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 36 50% 75%;
-    --primary-foreground: 0 0% 10%;
+    --primary: 36 50% 40%;
+    --primary-foreground: 36 30% 98%;
 
-    --secondary: 200 15% 20%;
-    --secondary-foreground: 36 50% 88%;
+    --secondary: 36 10% 90%;
+    --secondary-foreground: 36 50% 40%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 36 20% 60%;
+    --muted: 36 10% 92%;
+    --muted-foreground: 36 10% 40%;
 
-    --accent: 200 40% 25%;
-    --accent-foreground: 36 50% 88%;
+    --accent: 36 50% 94%;
+    --accent-foreground: 36 50% 40%;
 
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 36 50% 88%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 36 30% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 36 50% 75%;
+    --border: 36 10% 85%;
+    --input: 36 10% 85%;
+    --ring: 36 50% 40%;
 
     --radius: 0.5rem;
     
-    --elegant-gold: 36 50% 75%;
-    --dark-base: 0 0% 10%;
-    --dark-surface: 0 0% 12%;
-    --dark-elevated: 0 0% 15%;
-    --slate-accent: 200 15% 20%;
+    --elegant-gold: 36 50% 50%;
+    --dark-base: 36 30% 98%;
+    --dark-surface: 0 0% 100%;
+    --dark-elevated: 36 10% 95%;
+    --slate-accent: 36 10% 90%;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 0 0% 10%;
+    /* Dark Mode - Obsidian & Elegant Gold */
+    --background: 0 0% 8%;
     --foreground: 36 50% 88%;
 
-    --card: 0 0% 12%;
+    --card: 0 0% 10%;
     --card-foreground: 36 50% 88%;
 
-    --popover: 0 0% 12%;
+    --popover: 0 0% 10%;
     --popover-foreground: 36 50% 88%;
 
     --primary: 36 50% 75%;
-    --primary-foreground: 0 0% 10%;
+    --primary-foreground: 0 0% 8%;
 
-    --secondary: 200 15% 20%;
+    --secondary: 200 15% 15%;
     --secondary-foreground: 36 50% 88%;
 
-    --muted: 0 0% 18%;
+    --muted: 0 0% 15%;
     --muted-foreground: 36 20% 60%;
 
-    --accent: 200 40% 25%;
+    --accent: 200 40% 20%;
     --accent-foreground: 36 50% 88%;
 
-    --destructive: 0 62.8% 50%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 36 50% 88%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 36 50% 75%;
     
-    --sidebar-background: 0 0% 10%;
+    --elegant-gold: 36 50% 75%;
+    --dark-base: 0 0% 8%;
+    --dark-surface: 0 0% 10%;
+    --dark-elevated: 0 0% 12%;
+    --slate-accent: 200 15% 15%;
+
+    --sidebar-background: 0 0% 8%;
     --sidebar-foreground: 36 50% 88%;
     --sidebar-primary: 36 50% 75%;
-    --sidebar-primary-foreground: 0 0% 10%;
-    --sidebar-accent: 0 0% 15%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 12%;
     --sidebar-accent-foreground: 36 50% 88%;
-    --sidebar-border: 0 0% 20%;
+    --sidebar-border: 0 0% 15%;
     --sidebar-ring: 36 50% 75%;
+  }
+}
+
+@layer utilities {
+  .noise-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+  }
+  
+  .magnetic {
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
   }
 }
 
@@ -107,6 +119,6 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-500 selection:bg-elegant-gold/30;
   }
 }

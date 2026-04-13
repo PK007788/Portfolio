@@ -2,56 +2,28 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ExternalLink, Github, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { fadeUp, hoverLift, viewportStandard } from "@/lib/motion";
+import { portfolioData } from "@/data/portfolio";
 
-const projects = [
-  {
-    title: "Vyapaar Sahayak",
-    subtitle: "Conversational AI Accounting Assistant",
-    description: "Voice-enabled AI assistant enabling small shopkeepers to manage invoices, credit, and payments using Hindi/Hinglish natural language commands. Features an end-to-end AI pipeline with speech-to-text, intent classification (TF-IDF + Logistic Regression), and entity extraction.",
-    tech: ["Python", "FastAPI", "React", "SQLite", "NLP", "Web Speech API"],
-    github: "https://github.com/PK007788/Vyapaar_Sahayak",
-    stars: 1,
-  },
-  {
-    title: "InkSynk",
-    subtitle: "Smart Real-Time Collaborative Editor",
-    description: "Real-time collaborative text editor using WebSockets and Yjs (CRDT-based sync) with live cursor tracking, typing awareness, and AI-powered document summarization via Hugging Face APIs with a BYOK approach.",
-    tech: ["React", "Node.js", "MongoDB", "Yjs", "WebSockets", "Hugging Face"],
-    github: "https://github.com/PK007788/InkSynk",
-    stars: 2,
-  },
-  {
-    title: "Urban X-Ray",
-    subtitle: "AI Flood Intelligence System",
-    description: "AI-based urban flood prediction system modelling drainage health and predicting zone-level flood probability. Engineered the Drainage Condition Index (DCI) and contributed to a CNN-based flood image detection module.",
-    tech: ["Python", "Scikit-learn", "CNN", "Streamlit"],
-    github: "https://github.com/PK007788/Urban_Xray",
-    stars: 1,
-  },
-  {
-    title: "Leukemia Cell Detection",
-    subtitle: "Deep Learning Diagnostic System",
-    description: "Deep learning system to detect leukemic cells from microscopic blood smear images using fine-tuned ResNet-50 with automated OpenCV nucleus segmentation. Achieved 80% classification accuracy.",
-    tech: ["Python", "TensorFlow", "ResNet-50", "OpenCV", "Flask", "Streamlit"],
-    github: "https://github.com/PK007788/Leukemia_Detector_And_Predictor_Using_ResNet_Main",
-    stars: 4,
-  },
-  {
-    title: "EcoMitra",
-    subtitle: "Smart Waste Segregation System",
-    description: "Computer vision module for a hardware-integrated smart waste bin. AI predictions directly controlled the bin's mechanical sorting mechanism using MobileNetV2 and YOLOv5 for real-time multi-class detection.",
-    tech: ["Python", "MobileNetV2", "YOLOv5", "Computer Vision"],
-    github: "https://github.com/PK007788/Waste_Classifier_CNN_Model",
-  },
-];
+const projects = portfolioData.projects;
 
-const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => (
+const ProjectCard = ({
+  project,
+  index,
+  prefersReducedMotion,
+}: {
+  project: typeof projects[0];
+  index: number;
+  prefersReducedMotion: boolean;
+}) => (
   <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-60px" }}
+    initial="hidden"
+    whileInView="show"
+    variants={fadeUp(index * 0.06, 30)}
+    viewport={viewportStandard}
     transition={{ duration: 0.5, delay: index * 0.1 }}
+    whileHover={prefersReducedMotion ? undefined : hoverLift}
   >
     <Card className="bg-dark-surface border-border hover:border-elegant-gold/50 transition-all duration-500 p-8 group flex flex-col h-full relative overflow-hidden">
       {/* Hover glow */}
@@ -104,6 +76,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
 
 export const Projects = () => {
   const [expanded, setExpanded] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const topProjects = projects.slice(0, 4);
   const moreProjects = projects.slice(4);
 
@@ -113,18 +86,18 @@ export const Projects = () => {
       
       <div className="container max-w-6xl mx-auto relative z-10">
         <motion.h2
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-12"
+          initial="hidden"
+          whileInView="show"
+          variants={fadeUp()}
+          viewport={viewportStandard}
+          className="font-playfair text-4xl md:text-5xl font-bold text-elegant-gold mb-16 text-center"
         >
           Projects
         </motion.h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {topProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+            <ProjectCard key={index} project={project} index={index} prefersReducedMotion={!!prefersReducedMotion} />
           ))}
         </div>
 
@@ -140,7 +113,7 @@ export const Projects = () => {
                   className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 overflow-hidden"
                 >
                   {moreProjects.map((project, index) => (
-                    <ProjectCard key={index} project={project} index={0} />
+                    <ProjectCard key={index} project={project} index={index} prefersReducedMotion={!!prefersReducedMotion} />
                   ))}
                 </motion.div>
               )}
